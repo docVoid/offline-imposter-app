@@ -44,7 +44,7 @@ See [dev.md](./dev.md) for instructions on how to set up and test the project lo
 
 ## License
 
-MIT License
+See [LICENSE.md](./LICENSE.md)
 
 ## Contributing
 
