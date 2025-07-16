@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/player_input_list.dart';
 
 class SetupScreen extends StatefulWidget {
@@ -12,8 +13,29 @@ class _SetupScreenState extends State<SetupScreen> {
   int playerCount = 3;
   int imposterCount = 1;
   List<String> names = List.filled(3, '');
-
   String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedData();
+  }
+
+  Future<void> _loadSavedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedNames = prefs.getStringList('playerNames');
+    final savedImposters = prefs.getInt('imposterCount');
+
+    if (savedNames != null && savedNames.isNotEmpty) {
+      setState(() {
+        names = savedNames;
+        playerCount = savedNames.length;
+        imposterCount = savedImposters != null && savedImposters < playerCount
+            ? savedImposters
+            : 1;
+      });
+    }
+  }
 
   void updateName(int index, String value) {
     setState(() {
@@ -53,8 +75,12 @@ class _SetupScreenState extends State<SetupScreen> {
     return true;
   }
 
-  void startGame() {
+  void startGame() async {
     if (validate()) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList('playerNames', names);
+      await prefs.setInt('imposterCount', imposterCount);
+
       Navigator.pushNamed(
         context,
         '/reveal',
