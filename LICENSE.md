@@ -7,7 +7,7 @@ You are free to use, modify, and distribute this software for personal or commer
 
 ## MIT License
 
-Copyright (c) 2024 docVoid
+Copyright (c) 2025 docVoid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
